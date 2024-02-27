@@ -236,6 +236,14 @@ int ArInit(int audioConfiguration, POPUS_MULTISTREAM_CONFIGURATION opusConfig, v
     
     // Disable lowering volume of other audio streams (SDL sets AVAudioSessionCategoryOptionDuckOthers by default)
     [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback withOptions:AVAudioSessionCategoryOptionMixWithOthers error:nil];
+
+    // Disable ducking so other audio sources aren't quiet.
+    NSError* categoryErr;
+    AVAudioSession* session = [AVAudioSession sharedInstance];
+    BOOL success = [session setCategory: session.category withOptions:AVAudioSessionCategoryOptionMixWithOthers error:&categoryErr];
+    if (success == NO) {
+        Log(LOG_E, @"Unable to set AVAudioSession category");
+    }
     
     return 0;
 }
