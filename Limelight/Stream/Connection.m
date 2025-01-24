@@ -239,7 +239,15 @@ int ArInit(int audioConfiguration, POPUS_MULTISTREAM_CONFIGURATION opusConfig, v
 
     // Disable ducking so other audio sources aren't quiet.
     NSError* categoryErr;
+    NSError* spatialErr;
     AVAudioSession* session = [AVAudioSession sharedInstance];
+#if TARGET_OS_VISION
+    BOOL spatialAudioSuccess = [session setIntendedSpatialExperience:AVAudioSessionSpatialExperienceBypassed options:nil error:&spatialErr];
+    if (!spatialAudioSuccess) {
+        Log(LOG_E, @"Unable to set AVAudioSession spatial audio");
+    }
+#endif
+    
     BOOL success = [session setCategory: session.category withOptions:AVAudioSessionCategoryOptionMixWithOthers error:&categoryErr];
     if (success == NO) {
         Log(LOG_E, @"Unable to set AVAudioSession category");
