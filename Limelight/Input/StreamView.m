@@ -18,6 +18,12 @@
 
 static const double X1_MOUSE_SPEED_DIVISOR = 2.5;
 
+#if !TARGET_OS_VISION
+static const int KEYBOARD_OPEN_REQUIRED_TOUCH_COUNT = 3;
+#else
+static const int KEYBOARD_OPEN_REQUIRED_TOUCH_COUNT = 2;
+#endif
+
 @implementation StreamView {
     OnScreenControls* onScreenControls;
     
@@ -382,7 +388,7 @@ static const double X1_MOUSE_SPEED_DIVISOR = 2.5;
         // is triggered.
         [touchHandler touchesBegan:touches withEvent:event];
         
-        if ([[event allTouches] count] == 3) {
+        if ([[event allTouches] count] == KEYBOARD_OPEN_REQUIRED_TOUCH_COUNT) {
             if (isInputingText) {
                 Log(LOG_D, @"Closing the keyboard");
                 [keyInputField resignFirstResponder];
@@ -391,7 +397,7 @@ static const double X1_MOUSE_SPEED_DIVISOR = 2.5;
                 Log(LOG_D, @"Opening the keyboard");
                 // Prepare the textbox used to capture keyboard events.
                 keyInputField.delegate = self;
-                keyInputField.text = @"0";
+                keyInputField.text = @" ";
 #if !TARGET_OS_TV && !TARGET_OS_VISION
                 // Prepare the toolbar above the keyboard for more options
                 UIToolbar *customToolbarView = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, self.bounds.size.width, 44)];
@@ -855,7 +861,7 @@ static const double X1_MOUSE_SPEED_DIVISOR = 2.5;
     });
     
     // Reset text field back to known state
-    textField.text = @"0";
+    textField.text = @" ";
     
     // Move the insertion point back to the end of the text box
     UITextRange *textRange = [textField textRangeFromPosition:textField.endOfDocument toPosition:textField.endOfDocument];
