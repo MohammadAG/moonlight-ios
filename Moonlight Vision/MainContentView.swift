@@ -108,7 +108,6 @@ struct MainContentView: View {
                     if let selectedHost {
                         ComputerView(host: selectedHost)
                     }
-                    
                 }.tabItem {
                     Label("Computers", systemImage: "desktopcomputer")
                 }
@@ -151,7 +150,7 @@ struct MainContentView: View {
                 isDeletingHost = true
                 hostToDelete = host
             } label: {
-                Label("Delete PC", systemImage: "trash")
+                Label("Delete PC…", systemImage: "trash")
             }
         }
     }
