@@ -24,6 +24,8 @@ class MainViewModel: NSObject, ObservableObject, DiscoveryCallback, PairCallback
     @Published var activelyStreaming = false
     @Published var streamSettings: TemporarySettings
     
+    @Published var appImage = [TemporaryApp : UIImage]()
+    
     private var dataManager: DataManager
     private var discoveryManager: DiscoveryManager? = nil
     private var appManager: AppAssetManager?
@@ -75,6 +77,11 @@ class MainViewModel: NSObject, ObservableObject, DiscoveryCallback, PairCallback
 
     nonisolated func receivedAsset(for app: TemporaryApp!) {
         // pass
+        Task { @MainActor in
+            print("Found asset for \(String(describing: app.name))")
+            self.appImage[app] = self.boxArtCache.object(forKey: app)
+        }
+        
     }
     
     // MARK: Pairing
@@ -169,6 +176,9 @@ class MainViewModel: NSObject, ObservableObject, DiscoveryCallback, PairCallback
         if appListResponse?.isStatusOk() == true {
             let serverApps = (appListResponse!.getAppList() as! Set<TemporaryApp>)
             
+            print("Refreshing assets")
+            appManager?.retrieveAssets(from: host)
+            
             var newAppList = OrderedSet<TemporaryApp>()
             // Only new apps we have received are valid, but keep the old object and state if it exists.
             for serverApp in serverApps {
@@ -200,6 +210,14 @@ class MainViewModel: NSObject, ObservableObject, DiscoveryCallback, PairCallback
             
             // self.updateHostShortcuts
             host.appList = newAppList
+            
+            for app in host.appList {
+                if let path = AppAssetManager.boxArtPath(for: app) {
+                    if (FileManager.default.fileExists(atPath: path)) {
+                        appImage[app] = UIImage(contentsOfFile: path)
+                    }
+                }
+            }
         }
     }
 
