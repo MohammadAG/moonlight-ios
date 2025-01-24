@@ -5,6 +5,7 @@ import GameController
 
 struct MainContentView: View {
     @EnvironmentObject private var viewModel: MainViewModel
+    @StateObject var toolbarViewModel = ToolbarViewModel()
     
     @State private var selectedHost: TemporaryHost?
     
@@ -13,12 +14,14 @@ struct MainContentView: View {
     @State private var hostToDelete: TemporaryHost?
     @State private var newHostIp = ""
     @State private var dimPassthrough = true
+    @State private var showExtraButtons = false
     
     var body: some View {
         if viewModel.activelyStreaming {
             ZStack {
                 StreamView(streamConfig: $viewModel.currentStreamConfig)
                     .handlesGameControllerEvents(matching: .gamepad)
+                    .environmentObject(toolbarViewModel)
             }
             .onAppear {
                 guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene else { return }
@@ -33,15 +36,38 @@ struct MainContentView: View {
             .toolbar {}
             .ornament(attachmentAnchor: .scene(.topLeading), contentAlignment: .bottomLeading) {
                 HStack {
-                    Button("Close", systemImage: "xmark") {
-                        viewModel.activelyStreaming = false
-                    }
                     Button("Toggle Dimming", systemImage: dimPassthrough ? "moon.fill" : "moon") {
                         dimPassthrough.toggle()
+                    }
+                    
+                    Button("Show extra buttons", systemImage: showExtraButtons ? "ellipsis.rectangle.fill" : "ellipsis.rectangle") {
+                        withAnimation {
+                            showExtraButtons.toggle()
+                        }
                     }
                 }
                 .labelStyle(.iconOnly)
                 .padding()
+            }
+            .ornament(attachmentAnchor: .scene(.topTrailing), contentAlignment: .bottomTrailing) {
+                HStack {
+                    Button("Close", systemImage: "xmark") {
+                        viewModel.activelyStreaming = false
+                    }
+                }
+                .labelStyle(.iconOnly)
+                .padding()
+            }
+            
+            .ornament(attachmentAnchor: .scene(.bottom)) {
+                if showExtraButtons {
+                    VStack {
+                        Spacer(minLength: 100)
+                        
+                        ToolbarView()
+                            .environmentObject(toolbarViewModel)
+                    }
+                }
             }
             .clipShape(RoundedRectangle(cornerRadius: 30.0))
             .glassBackgroundEffect(in: RoundedRectangle(cornerRadius: 30.0))

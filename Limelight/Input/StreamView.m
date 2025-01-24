@@ -444,22 +444,9 @@ static const int KEYBOARD_OPEN_REQUIRED_TOUCH_COUNT = 2;
     return barButton;
 }
 
-- (void)toolbarButtonClicked:(UIButton *)sender {
-    BOOL isToggleable = [objc_getAssociatedObject(sender, "isToggleable") boolValue];
-    BOOL isOn = [objc_getAssociatedObject(sender, "isOn") boolValue];
-    if (isToggleable){
-        isOn = !isOn;
-        // Update the button's appearance based on its new state
-        if (isOn) {
-            sender.imageView.backgroundColor = [UIColor lightGrayColor];
-        } else {
-            sender.imageView.backgroundColor = [UIColor blackColor];
-        }
-    }
-    // Update the new on/off state of the button
-    objc_setAssociatedObject(sender, "isOn", @(isOn), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-    // Get the keyCode parameter and convert to short for key press event
-    short keyCode = [objc_getAssociatedObject(sender, "keyCode") shortValue];
+- (void)sendKeyCode:(NSInteger)keyCodeToSend toggleable:(BOOL)isToggleable isOn:(BOOL)isOn {
+    short keyCode = keyCodeToSend;
+    
     // Close keyboard if done button clicked
     if (!keyCode) {
         [keyInputField resignFirstResponder];
@@ -482,6 +469,25 @@ static const int KEYBOARD_OPEN_REQUIRED_TOUCH_COUNT = 2;
             LiSendKeyboardEvent(keyCode, KEY_ACTION_UP, 0);
         }
     }
+}
+
+- (void)toolbarButtonClicked:(UIButton *)sender {
+    BOOL isToggleable = [objc_getAssociatedObject(sender, "isToggleable") boolValue];
+    BOOL isOn = [objc_getAssociatedObject(sender, "isOn") boolValue];
+    if (isToggleable){
+        isOn = !isOn;
+        // Update the button's appearance based on its new state
+        if (isOn) {
+            sender.imageView.backgroundColor = [UIColor lightGrayColor];
+        } else {
+            sender.imageView.backgroundColor = [UIColor blackColor];
+        }
+    }
+    // Update the new on/off state of the button
+    objc_setAssociatedObject(sender, "isOn", @(isOn), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    // Get the keyCode parameter and convert to short for key press event
+    NSNumber *keyCode = objc_getAssociatedObject(sender, "keyCode");
+    [self sendKeyCode:[keyCode shortValue] toggleable:isToggleable isOn:isOn];
 }
 
 - (BOOL)handleMouseButtonEvent:(int)buttonAction forTouches:(NSSet *)touches withEvent:(UIEvent *)event {

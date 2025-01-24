@@ -34,6 +34,7 @@ enum X1MouseButton : uint8_t;
                   config:(StreamConfiguration*)streamConfig;
 - (void) showOnScreenControls;
 - (OnScreenControlsLevel) getCurrentOscState;
+- (void)sendKeyCode:(NSInteger)keyCodeToSend toggleable:(BOOL)isToggleable isOn:(BOOL)isOn;
 
 #if !TARGET_OS_TV
 - (void) updateCursorLocation:(CGPoint)location isMouse:(BOOL)isMouse;

@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		116EE75B2D43FD27004FEF38 /* QueuedButtonEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 116EE75A2D43FD27004FEF38 /* QueuedButtonEvent.swift */; };
+		116EE75D2D43FD32004FEF38 /* ToolbarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 116EE75C2D43FD32004FEF38 /* ToolbarButtonItem.swift */; };
+		116EE75F2D43FD3F004FEF38 /* ToolbarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 116EE75E2D43FD3F004FEF38 /* ToolbarViewModel.swift */; };
+		118D870B2D43BA360051DA28 /* ToolbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 118D870A2D43BA320051DA28 /* ToolbarView.swift */; };
 		693B3A9B218638CD00982F7B /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 693B3A9A218638CD00982F7B /* Settings.bundle */; };
 		98181BE92791277400E43572 /* libSDL2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 98181BE82791275D00E43572 /* libSDL2.a */; };
 		98181BEB2791278F00E43572 /* libSDL2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 98181BEA2791278300E43572 /* libSDL2.a */; };
@@ -252,6 +256,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		116EE75A2D43FD27004FEF38 /* QueuedButtonEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueuedButtonEvent.swift; sourceTree = "<group>"; };
+		116EE75C2D43FD32004FEF38 /* ToolbarButtonItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarButtonItem.swift; sourceTree = "<group>"; };
+		116EE75E2D43FD3F004FEF38 /* ToolbarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarViewModel.swift; sourceTree = "<group>"; };
+		118D870A2D43BA320051DA28 /* ToolbarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarView.swift; sourceTree = "<group>"; };
 		566E9D2B2770B23A00EF7BFE /* Moonlight v1.7.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Moonlight v1.7.xcdatamodel"; sourceTree = "<group>"; };
 		693B3A9A218638CD00982F7B /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		9803CCAB254F9EAF00EE185E /* ConnectionCallbacks.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConnectionCallbacks.h; sourceTree = "<group>"; };
@@ -562,6 +570,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		116EE7592D43FD18004FEF38 /* Toolbar */ = {
+			isa = PBXGroup;
+			children = (
+				118D870A2D43BA320051DA28 /* ToolbarView.swift */,
+				116EE75E2D43FD3F004FEF38 /* ToolbarViewModel.swift */,
+				116EE75C2D43FD32004FEF38 /* ToolbarButtonItem.swift */,
+				116EE75A2D43FD27004FEF38 /* QueuedButtonEvent.swift */,
+			);
+			path = Toolbar;
+			sourceTree = "<group>";
+		};
 		9896219423D15C2900211983 /* X1Kit */ = {
 			isa = PBXGroup;
 			children = (
@@ -604,6 +623,7 @@
 		F7A119592B5DE1AB001E8686 /* Moonlight Vision */ = {
 			isa = PBXGroup;
 			children = (
+				116EE7592D43FD18004FEF38 /* Toolbar */,
 				F7A1195A2B5DE1E2001E8686 /* MoonlightVisionApp.swift */,
 				F71801542B658B5E00A9336B /* StreamView.swift */,
 				F7A1195C2B5DE1FD001E8686 /* MainContentView.swift */,
@@ -1204,6 +1224,7 @@
 				F7A1190C2B5DDF73001E8686 /* Limelight.xcdatamodeld in Sources */,
 				F7A1190D2B5DDF73001E8686 /* AbsoluteTouchHandler.m in Sources */,
 				F7A1190E2B5DDF73001E8686 /* RelativeTouchHandler.m in Sources */,
+				116EE75B2D43FD27004FEF38 /* QueuedButtonEvent.swift in Sources */,
 				F7A1190F2B5DDF73001E8686 /* KeyboardSupport.m in Sources */,
 				F7A119102B5DDF73001E8686 /* VideoDecoderRenderer.m in Sources */,
 				F7A119122B5DDF73001E8686 /* AppListResponse.m in Sources */,
@@ -1231,6 +1252,7 @@
 				F7A119272B5DDF73001E8686 /* Logger.m in Sources */,
 				F7A1192A2B5DDF73001E8686 /* HapticContext.m in Sources */,
 				F7A4A4D62B61E2F2001591F3 /* TemporaryHost.swift in Sources */,
+				116EE75F2D43FD3F004FEF38 /* ToolbarViewModel.swift in Sources */,
 				F7A1192C2B5DDF73001E8686 /* TemporarySettings.m in Sources */,
 				F71801442B654D9100A9336B /* TemporaryApp.swift in Sources */,
 				F7A1192D2B5DDF73001E8686 /* CryptoManager.m in Sources */,
@@ -1239,6 +1261,7 @@
 				F7A119302B5DDF73001E8686 /* HttpRequest.m in Sources */,
 				F7A119312B5DDF73001E8686 /* OnScreenControls.m in Sources */,
 				F7A119332B5DDF73001E8686 /* X1Kit.swift in Sources */,
+				118D870B2D43BA360051DA28 /* ToolbarView.swift in Sources */,
 				F7A119342B5DDF73001E8686 /* AppAssetManager.m in Sources */,
 				F7A119352B5DDF73001E8686 /* DiscoveryWorker.m in Sources */,
 				F7A119362B5DDF73001E8686 /* ControllerSupport.m in Sources */,
@@ -1251,6 +1274,7 @@
 				F778956E2B65975900F02568 /* SDLMainWrapper.m in Sources */,
 				F7A1193B2B5DDF73001E8686 /* StreamManager.m in Sources */,
 				F7A1193C2B5DDF73001E8686 /* KeyboardInputField.m in Sources */,
+				116EE75D2D43FD32004FEF38 /* ToolbarButtonItem.swift in Sources */,
 				F7A4A4D12B5F216C001591F3 /* MainViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

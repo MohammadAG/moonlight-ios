@@ -628,6 +628,10 @@
 #endif
 }
 
+- (void)sendKeyCode:(NSInteger)keyCodeToSend toggleable:(BOOL)isToggleable isOn:(BOOL)isOn {
+    [_streamView sendKeyCode:keyCodeToSend toggleable:isToggleable isOn:isOn];
+}
+
 - (void) setHdrMode:(bool)enabled {
     Log(LOG_I, @"HDR is now: %s", enabled ? "active" : "inactive");
     dispatch_async(dispatch_get_main_queue(), ^{

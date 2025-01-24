@@ -22,4 +22,5 @@
 @property (nonatomic) StreamConfiguration* streamConfig;
 
 -(void)updatePreferredDisplayMode:(BOOL)streamActive;
+-(void)sendKeyCode:(NSInteger)keyCodeToSend toggleable:(BOOL)isToggleable isOn:(BOOL)isOn;
 @end

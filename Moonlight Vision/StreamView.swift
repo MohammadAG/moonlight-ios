@@ -12,9 +12,9 @@ struct StreamView: UIViewControllerRepresentable {
     typealias UIViewControllerType = StreamFrameViewController
     
     @Binding var streamConfig: StreamConfiguration
+    @EnvironmentObject var toolbarViewModel: ToolbarViewModel
     
     let controllerReference = Reference<UIViewControllerType>()
-    
     
     func makeUIViewController(context: Context) -> UIViewControllerType {
         let streamView = StreamFrameViewController()
@@ -25,6 +25,14 @@ struct StreamView: UIViewControllerRepresentable {
     
     func updateUIViewController(_ viewController: UIViewControllerType, context: Context) {
         controllerReference.object = viewController
+        
+        if !toolbarViewModel.queue.isEmpty {
+            // Avoid a warning about mutating a view during updates
+            DispatchQueue.main.async {
+                let first = toolbarViewModel.queue.removeFirst()
+                (viewController as StreamFrameViewController).sendKeyCode(first.item.keyCode, toggleable: first.item.toggleable, isOn: first.state)
+            }
+        }
     }
 }
 
