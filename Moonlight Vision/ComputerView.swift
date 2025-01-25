@@ -18,40 +18,75 @@ struct ComputerView: View {
                 case PairState.paired:
                     AppsView(host: host)
                 case PairState.unpaired:
-                    Text(host.name)
-                    Button("Start Pairing") {
-                        viewModel.tryPairHost(host)
-                    }.alert(
-                        "Pairing",
-                        isPresented: $viewModel.pairingInProgress
-                    ) {
+                    if viewModel.pairingInProgress {
+                        Text("Pairing")
+                            .font(.title)
+                            .bold()
+                            .padding()
+                        
+                        Spacer()
+                        
+                        Text("Enter the following PIN on the host machine:")
+                        Text(viewModel.currentPin)
+                            .monospacedDigit()
+                            .font(.extraLargeTitle)
+                            .bold()
+                        
+                        Text("If your host PC is running Sunshine, navigate to the Sunshine web UI to enter the PIN.")
+                        
                         Button(role: .cancel) {
                             viewModel.endPairing()
                         } label: {
                             Text("Cancel")
                         }
-                    } message: {
-                        Text("""
-                        Enter the following PIN on the host machine:
-                        \(viewModel.currentPin).\n If your host PC is running Sunshine,
-                        navigate to the Sunshine web UI to enter the PIN.
-                        """)
+                        
+                        Spacer()
+                    } else {
+                        Image(systemName: "link")
+                            .font(.extraLargeTitle)
+                        Text("Pairing required")
+                            .font(.title)
+                            .padding(.bottom)
+                        
+                        Text(host.name)
+                            .font(.title2)
+                        Button("Start Pairing") {
+                            viewModel.tryPairHost(host)
+                        }
                     }
                 default:
-                    Text("UNK")
+                    Text("Unknown state")
                 }
             }
-        }.task {
+        }
+        .task {
             await viewModel.updateHost(host: host)
         }
     }
 }
 
-#Preview {
+#Preview("Pairing required") {
+    let viewModel = MainViewModel()
+    viewModel.pairingInProgress = false
+    viewModel.currentPin = "1234"
+    var outerHost: TemporaryHost = .init()
+    outerHost.pairState = PairState.unpaired
+    outerHost.name = "Server"
+
+    return NavigationStack {
+        ComputerView(host: outerHost).environmentObject(viewModel)
+    }
+}
+
+
+#Preview("Pairing") {
     let viewModel = MainViewModel()
     viewModel.pairingInProgress = true
+    viewModel.currentPin = "1234"
     var outerHost: TemporaryHost = .init()
     outerHost.pairState = PairState.unpaired
 
-    return ComputerView(host: outerHost).environmentObject(viewModel)
+    return NavigationStack {
+        ComputerView(host: outerHost).environmentObject(viewModel)
+    }
 }
