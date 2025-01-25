@@ -23,6 +23,7 @@ class MainViewModel: NSObject, ObservableObject, DiscoveryCallback, PairCallback
     @Published var currentStreamConfig = StreamConfiguration()
     @Published var activelyStreaming = false
     @Published var streamSettings: TemporarySettings
+    @Published var overlayText = ""
     
     @Published var appImage = [TemporaryApp : UIImage]()
     
@@ -57,6 +58,13 @@ class MainViewModel: NSObject, ObservableObject, DiscoveryCallback, PairCallback
             appManager = AppAssetManager(callback: self)
             discoveryManager = DiscoveryManager(hosts: hosts, andCallback: self)
         }
+        
+        NotificationCenter.default.publisher(for: Notification.Name(rawValue: "OVERLAY_TEXT_CHANGED"))
+            .subscribe(on: DispatchQueue.main)
+            .map({ output in
+                output.object as? String ?? ""
+            })
+            .assign(to: &$overlayText)
     }
     
     func setHosts(newHosts: [TemporaryHost]) {

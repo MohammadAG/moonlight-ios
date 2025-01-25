@@ -76,6 +76,16 @@ struct StreamContainerView: View {
                 }
             }
         }
+        .ornament(attachmentAnchor: .scene(.top), contentAlignment: .bottom) {
+            if viewModel.streamSettings.statsOverlay && !viewModel.overlayText.isEmpty {
+                VStack {
+                    Text(viewModel.overlayText)
+                        .padding()
+                }
+                .clipShape(RoundedRectangle(cornerRadius: 30.0))
+                .glassBackgroundEffect(in: RoundedRectangle(cornerRadius: 30.0))
+            }
+        }
         .clipShape(RoundedRectangle(cornerRadius: 30.0))
         .glassBackgroundEffect(in: RoundedRectangle(cornerRadius: 30.0))
         .preferredSurroundingsEffect(darknessLevel.effect)

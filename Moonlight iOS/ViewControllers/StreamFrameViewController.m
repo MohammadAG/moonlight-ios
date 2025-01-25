@@ -277,6 +277,7 @@
 }
 
 - (void)updateOverlayText:(NSString*)text {
+#if !TARGET_OS_VISION
     if (_overlayView == nil) {
         _overlayView = [[UITextView alloc] init];
 #if !TARGET_OS_TV
@@ -318,6 +319,9 @@
     else {
         [_overlayView setHidden:YES];
     }
+#else
+    [[NSNotificationCenter defaultCenter] postNotificationName: @"OVERLAY_TEXT_CHANGED" object:text];
+#endif
 }
 
 - (void) returnToMainFrame {
