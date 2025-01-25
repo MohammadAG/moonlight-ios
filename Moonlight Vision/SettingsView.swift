@@ -41,43 +41,75 @@ struct SettingsView: View {
                         Text(settings.resolution.description)
                     }
                 }
-                Picker("Framerate", selection: $settings.framerate) {
-                    ForEach(Self.framerateTable, id: \.self) { framerate in
-                        Text("\(framerate)")
+                HStack {
+                    Text("Framerate")
+                        .padding(.trailing)
+                    Picker("Framerate", selection: $settings.framerate) {
+                        ForEach(Self.framerateTable, id: \.self) { framerate in
+                            Text("\(framerate)")
+                        }
                     }
+                    .pickerStyle(.segmented)
                 }
                 Picker("Bitrate", selection: $settings.bitrate) {
                     ForEach(Self.bitrateTable, id: \.self) { bitrate in
                         Text("\(bitrate / 1000)Mbps")
                     }
                 }
-                Picker("Touch Mode", selection: $settings.absoluteTouchMode) {
-                    Text("Touchpad").tag(false)
-                    Text("Touchscreen").tag(true)
+                HStack {
+                    Text("Touch Mode")
+                        .padding(.trailing)
+                    
+                    Picker("Touch Mode", selection: $settings.absoluteTouchMode) {
+                        Text("Touchpad").tag(false)
+                        Text("Touchscreen").tag(true)
+                    }
+                    .pickerStyle(.segmented)
                 }
-                Picker("On-Screen Controls", selection: $settings.onscreenControls) {
-                    Text("Off").tag(OnScreenControlsLevel.off)
-                    Text("Auto").tag(OnScreenControlsLevel.auto)
-                    Text("Simple").tag(OnScreenControlsLevel.simple)
-                    Text("Full").tag(OnScreenControlsLevel.full)
+                HStack {
+                    Text("On-Screen Controls")
+                        .padding(.trailing)
+                    Picker("On-Screen Controls", selection: $settings.onscreenControls) {
+                        Text("Off").tag(OnScreenControlsLevel.off)
+                        Text("Auto").tag(OnScreenControlsLevel.auto)
+                        Text("Simple").tag(OnScreenControlsLevel.simple)
+                        Text("Full").tag(OnScreenControlsLevel.full)
+                    }
+                    .pickerStyle(.segmented)
                 }
                 Toggle("Optimize Game Settings", isOn: $settings.optimizeGames)
-                Picker("Multi-Controller Mode", selection: $settings.multiController) {
-                    Text("Single").tag(false)
-                    Text("Auto").tag(true)
+                HStack {
+                    Text("Multi-Controller Mode")
+                        .padding(.trailing)
+                    
+                    Picker("Multi-Controller Mode", selection: $settings.multiController) {
+                        Text("Single").tag(false)
+                        Text("Auto").tag(true)
+                    }
+                    .pickerStyle(.segmented)
                 }
                 Toggle("Swap A/B and X/Y Buttons", isOn: $settings.swapABXYButtons)
                 Toggle("Play Audio on PC", isOn: $settings.playAudioOnPC)
-                Picker("Preferred Codec", selection: $settings.preferredCodec) {
-                    Text("H.264").tag(PreferredCodec.h264)
-                    Text("HEVC").tag(PreferredCodec.hevc)
-                    Text("AV1").tag(PreferredCodec.av1)
-                    Text("Auto").tag(PreferredCodec.auto)
+                HStack {
+                    Text("Preferred Codec")
+                        .padding(.trailing)
+                    Picker("Preferred Codec", selection: $settings.preferredCodec) {
+                        Text("H.264").tag(PreferredCodec.h264)
+                        Text("HEVC").tag(PreferredCodec.hevc)
+                        Text("AV1").tag(PreferredCodec.av1)
+                        Text("Auto").tag(PreferredCodec.auto)
+                    }
+                    .pickerStyle(.segmented)
                 }
                 Toggle("Enable HDR", isOn: $settings.enableHdr)
-                Picker("Frame Pacing", selection: $settings.useFramePacing) {
-                    Text("Lowest Latency").tag(false)
-                    Text("Smoothest Video").tag(true)
+                HStack {
+                    Text("Frame Pacing")
+                        .padding(.trailing)
+                    Picker("Frame Pacing", selection: $settings.useFramePacing) {
+                        Text("Lowest Latency").tag(false)
+                        Text("Smoothest Video").tag(true)
+                    }
+                    .pickerStyle(.segmented)
                 }
                 Toggle("Citrix X1 Mouse Support", isOn: $settings.btMouseSupport)
                 Toggle("Statistics Overlay", isOn: $settings.statsOverlay)
@@ -203,6 +235,10 @@ private func simplifyFraction<I: BinaryInteger>(numerator: I, denominator: I) ->
 }
 
 #Preview {
-    @State var settings = TemporarySettings()
+    @Previewable @State var settings = TemporarySettings()
+    settings.width = 1920
+    settings.height = 1080
+    settings.framerate = 60
+    settings.bitrate = 5000
     return SettingsView(settings: $settings)
 }
