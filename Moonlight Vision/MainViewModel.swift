@@ -79,9 +79,13 @@ class MainViewModel: NSObject, ObservableObject, DiscoveryCallback, PairCallback
         // pass
         Task { @MainActor in
             print("Found asset for \(String(describing: app.name))")
-            self.appImage[app] = self.boxArtCache.object(forKey: app)
+            
+            if let path = AppAssetManager.boxArtPath(for: app) {
+                if (FileManager.default.fileExists(atPath: path)) {
+                    appImage[app] = UIImage(contentsOfFile: path)
+                }
+            }
         }
-        
     }
     
     // MARK: Pairing
@@ -176,9 +180,6 @@ class MainViewModel: NSObject, ObservableObject, DiscoveryCallback, PairCallback
         if appListResponse?.isStatusOk() == true {
             let serverApps = (appListResponse!.getAppList() as! Set<TemporaryApp>)
             
-            print("Refreshing assets")
-            appManager?.retrieveAssets(from: host)
-            
             var newAppList = OrderedSet<TemporaryApp>()
             // Only new apps we have received are valid, but keep the old object and state if it exists.
             for serverApp in serverApps {
@@ -211,11 +212,18 @@ class MainViewModel: NSObject, ObservableObject, DiscoveryCallback, PairCallback
             // self.updateHostShortcuts
             host.appList = newAppList
             
-            for app in host.appList {
-                if let path = AppAssetManager.boxArtPath(for: app) {
-                    if (FileManager.default.fileExists(atPath: path)) {
-                        appImage[app] = UIImage(contentsOfFile: path)
-                    }
+            print("Refreshing assets")
+            appManager?.retrieveAssets(from: host)
+            
+            self.loadAssetsFor(host: host)
+        }
+    }
+    
+    func loadAssetsFor(host: TemporaryHost) {
+        for app in host.appList {
+            if let path = AppAssetManager.boxArtPath(for: app) {
+                if (FileManager.default.fileExists(atPath: path)) {
+                    appImage[app] = UIImage(contentsOfFile: path)
                 }
             }
         }
