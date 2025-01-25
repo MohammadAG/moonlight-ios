@@ -54,18 +54,10 @@ struct AppButtonView: View {
                             .resizable()
                             .aspectRatio(contentMode: .fill)
                     } else {
-                        Image(systemName: "")
-                    }
-                }
-                
-                if viewModel.appImage[app] == nil {
-                    VStack {
-                        Spacer()
-                        
                         Text(app.name ?? "Unknown")
                             .multilineTextAlignment(.center)
-                            .frame(alignment: .center)
-                            .padding(.bottom)
+                            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+                            .padding()
                     }
                 }
             }
