@@ -39,15 +39,24 @@ class MainViewModel: NSObject, ObservableObject, DiscoveryCallback, PairCallback
     override init() {
         boxArtCache = NSCache<TemporaryApp, UIImage>()
         dataManager = DataManager()
-        // should this be in viewDidLoad and not init?
-        CryptoManager.generateKeyPairUsingSSL()
-        clientCert = CryptoManager.readCertFromFile()
+        
+        let isPreview = ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] == "1"
+        
+        if !isPreview {
+            // should this be in viewDidLoad and not init?
+            CryptoManager.generateKeyPairUsingSSL()
+            clientCert = CryptoManager.readCertFromFile()
+        } else {
+            clientCert = Data()
+        }
         uniqueId = IdManager.getUniqueId()
         streamSettings = dataManager.getSettings()
         
         super.init()
-        appManager = AppAssetManager(callback: self)
-        discoveryManager = DiscoveryManager(hosts: hosts, andCallback: self)
+        if !isPreview {
+            appManager = AppAssetManager(callback: self)
+            discoveryManager = DiscoveryManager(hosts: hosts, andCallback: self)
+        }
     }
     
     func setHosts(newHosts: [TemporaryHost]) {
