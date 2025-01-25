@@ -12,8 +12,9 @@ struct StreamContainerView: View {
     @EnvironmentObject private var viewModel: MainViewModel
     @StateObject var toolbarViewModel = ToolbarViewModel()
     
-    @State private var dimPassthrough = true
     @State private var showExtraButtons = false
+    
+    @State private var darknessLevel = DarknessLevel.dimmed
     
     var body: some View {
         ZStack {
@@ -34,9 +35,18 @@ struct StreamContainerView: View {
         .toolbar {}
         .ornament(attachmentAnchor: .scene(.topLeading), contentAlignment: .bottomLeading) {
             HStack {
-                Button("Toggle Dimming", systemImage: dimPassthrough ? "moon.fill" : "moon") {
-                    dimPassthrough.toggle()
+                Picker("Darkness", selection: $darknessLevel) {
+                    Label("Bright", systemImage: "sun.max")
+                        .tag(DarknessLevel.undimmed)
+                    Label("Semi-dimmed", systemImage: "moonphase.waxing.crescent.inverse")
+                        .tag(DarknessLevel.semi)
+                    Label("Dimmed", systemImage: "moonphase.waning.crescent")
+                        .tag(DarknessLevel.dimmed)
+                    Label("Ultra-dimmed", systemImage: "moonphase.full.moon.inverse")
+                        .tag(DarknessLevel.ultraDimmed)
                 }
+                
+                
                 
                 Button("Show extra buttons", systemImage: showExtraButtons ? "ellipsis.rectangle.fill" : "ellipsis.rectangle") {
                     withAnimation {
@@ -68,6 +78,6 @@ struct StreamContainerView: View {
         }
         .clipShape(RoundedRectangle(cornerRadius: 30.0))
         .glassBackgroundEffect(in: RoundedRectangle(cornerRadius: 30.0))
-        .preferredSurroundingsEffect(dimPassthrough ? .systemDark : nil)
+        .preferredSurroundingsEffect(darknessLevel.effect)
     }
 }

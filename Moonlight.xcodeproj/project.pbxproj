@@ -10,6 +10,7 @@
 		1117C1152D453511006E4B67 /* HostRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1117C1142D45350E006E4B67 /* HostRow.swift */; };
 		1117C1172D453635006E4B67 /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1117C1162D453632006E4B67 /* MainTabView.swift */; };
 		1117C11B2D4536DD006E4B67 /* StreamContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1117C11A2D4536D8006E4B67 /* StreamContainerView.swift */; };
+		1117C11D2D453BB2006E4B67 /* DarknessLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1117C11C2D453BB1006E4B67 /* DarknessLevel.swift */; };
 		116EE75B2D43FD27004FEF38 /* QueuedButtonEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 116EE75A2D43FD27004FEF38 /* QueuedButtonEvent.swift */; };
 		116EE75D2D43FD32004FEF38 /* ToolbarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 116EE75C2D43FD32004FEF38 /* ToolbarButtonItem.swift */; };
 		116EE75F2D43FD3F004FEF38 /* ToolbarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 116EE75E2D43FD3F004FEF38 /* ToolbarViewModel.swift */; };
@@ -262,6 +263,7 @@
 		1117C1142D45350E006E4B67 /* HostRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostRow.swift; sourceTree = "<group>"; };
 		1117C1162D453632006E4B67 /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
 		1117C11A2D4536D8006E4B67 /* StreamContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamContainerView.swift; sourceTree = "<group>"; };
+		1117C11C2D453BB1006E4B67 /* DarknessLevel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DarknessLevel.swift; sourceTree = "<group>"; };
 		116EE75A2D43FD27004FEF38 /* QueuedButtonEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueuedButtonEvent.swift; sourceTree = "<group>"; };
 		116EE75C2D43FD32004FEF38 /* ToolbarButtonItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarButtonItem.swift; sourceTree = "<group>"; };
 		116EE75E2D43FD3F004FEF38 /* ToolbarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarViewModel.swift; sourceTree = "<group>"; };
@@ -637,6 +639,7 @@
 				1117C1162D453632006E4B67 /* MainTabView.swift */,
 				F77B58B12B5EFC9000482BD5 /* ComputerView.swift */,
 				1117C11A2D4536D8006E4B67 /* StreamContainerView.swift */,
+				1117C11C2D453BB1006E4B67 /* DarknessLevel.swift */,
 				F71801412B65483D00A9336B /* AppsView.swift */,
 				F7199AFA2B72F33000E6D62D /* SettingsView.swift */,
 				F77B58AF2B5EF94900482BD5 /* SidebarView.swift */,
@@ -1266,6 +1269,7 @@
 				F7A4A4D62B61E2F2001591F3 /* TemporaryHost.swift in Sources */,
 				116EE75F2D43FD3F004FEF38 /* ToolbarViewModel.swift in Sources */,
 				F7A1192C2B5DDF73001E8686 /* TemporarySettings.m in Sources */,
+				1117C11D2D453BB2006E4B67 /* DarknessLevel.swift in Sources */,
 				F71801442B654D9100A9336B /* TemporaryApp.swift in Sources */,
 				F7A1192D2B5DDF73001E8686 /* CryptoManager.m in Sources */,
 				F7A1192E2B5DDF73001E8686 /* ConnectionHelper.m in Sources */,
